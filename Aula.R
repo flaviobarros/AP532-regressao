@@ -52,7 +52,7 @@ abline(coef=theta, col='blue')
 plot(cost_history[1:100], type='line', col='blue', lwd=2, main='Cost function', ylab='cost', xlab='Iterations')
 
 ###########################################
-## Usando o lm()
+## Usando o lm() - Regressão Linear Simples
 ###########################################
 ## Sumário e tabela ANOVA
 ads <- read.csv(file = 'Advertising.csv')
@@ -63,3 +63,71 @@ anova(fit)
 ## R² e coeficiente de determinação
 cor(x = ads$sales, y = ads$TV)
 cor(x = ads$sales, y = ads$TV)^2
+
+## Verifique os valores da estatística t para os betas e da estatística F
+
+###########################################
+## Usando o lm() - Regressão Múltipla
+###########################################
+n = 100; x = rnorm(n); x2 = rnorm(n); x3 = rnorm(n)
+## Gerando dados
+y = 1 + x + x2 + x3 + rnorm(n, sd = .1)
+
+## Obtendo os resíduos tendo removido X2 e X3 de X1 e Y
+ey = resid(lm(y ~ x2 + x3))
+ex = resid(lm(x ~ x2 + x3))
+
+## Regressão pela origem com os resíduos
+coef(lm(ey ~ ex - 1))
+ex
+
+## Fit the full linear model to show that it agrees
+coef(lm(y ~ x + x2 + x3))
+
+###########################################
+## Diagnóstico
+###########################################
+
+## Gerando dados
+n <- 100; x <- c(10, rnorm(n)); y <- c(10, c(rnorm(n)))
+
+## Plotando
+plot(x, y, frame = FALSE, cex = 2, pch = 21, bg = "lightblue", col = "black")
+abline(lm(y ~ x))
+
+## Vendo o impacto nos betas de cada medida
+fit <- lm(y ~ x)
+dfbetas(fit)
+round(dfbetas(fit)[1 : 10, 2], 3)
+
+## Vamos olhar o leverage
+round(hatvalues(fit)[1 : 10], 3)
+
+###########################################
+n = 100; x = rnorm(n); 
+## Gerando dados
+y = 1 + x + rnorm(n, sd = .5)
+y = c(11, y)
+x = c(10, x)
+plot(x, y, frame = FALSE, cex = 2, pch = 21, bg = "lightblue", col = "black")
+fit <- lm(y~x)
+abline(fit)
+
+## Impacto nos betas
+round(dfbetas(fit)[1 : 10, 1], 3)
+
+## Vamos olhar o leverage
+round(hatvalues(fit)[1 : 10], 3)
+
+###########################################
+## Importância de olhar o resíduo
+###########################################
+dat <- read.table('eistein.txt', header = FALSE)
+pairs(dat)
+
+## Vamos ver um modelo
+summary(lm(V1 ~ . -1, data = dat))
+
+## Agora vamos explorar os resíduos
+fit <- lm(V1 ~ . -1, data = dat)
+plot(predict(fit), resid(fit), pch = '.')
