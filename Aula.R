@@ -155,3 +155,22 @@ corrplot(M, method='circle')
 summary(M[upper.tri(M)])
 
 ## por que é importante?
+
+###########################################
+## Logística
+###########################################
+x <- seq(-10, 10, length = 1000)
+manipulate(
+  plot(x, exp(beta0 + beta1 * x) / (1 + exp(beta0 + beta1 * x)), 
+       type = "l", lwd = 3, frame = FALSE),
+  beta1 = slider(-2, 2, step = .1, initial = 2),
+  beta0 = slider(-2, 2, step = .1, initial = 0)
+)
+
+## Exercício
+## Use o Seatbelts e crie uma nova variável com SIM ou NÂO
+## para o caso de haver mais 119 mortes em um dado mês. Ajuste uma
+## regressão logística com as variáveis kms, PetrolPrice e law.
+## Dica fit <- glm(dpk ~ v1 + v2 + v3, data = seatbelts)
+## Vendo os coeficientes summary(fit)$coef
+
