@@ -131,3 +131,27 @@ summary(lm(V1 ~ . -1, data = dat))
 ## Agora vamos explorar os resíduos
 fit <- lm(V1 ~ . -1, data = dat)
 plot(predict(fit), resid(fit), pch = '.')
+
+###########################################
+## Exercícios
+###########################################
+## Utilizando o seguinte dataset
+data("Seatbelts")
+seatbelts <- as.data.frame(Seatbelts)
+
+## Ajuste um modelo linear com as variáveis kms, PetrolPrice e law
+
+## Estime a variância residual pela função resid e compare
+## com a estimativa fornecida pelo R
+
+## Faça uma análise de diagnsótico
+
+###########################################
+## Analisando as correlações
+###########################################
+## Analisando as correlações
+M <- cor(mtcars, use = 'complete.obs')
+corrplot(M, method='circle')
+summary(M[upper.tri(M)])
+
+## por que é importante?
