@@ -11,13 +11,13 @@ fit <- lm(data=mtcars, mpg~drat)
 ###########################################
 x <- mtcars$drat
 y <- mtcars$mpg
-n <- nrow(ads)
+n <- nrow(mtcars)
 beta0 <- 1
 beta1 <- 1
 alpha <- 0.1
 delta <- 1
 yhat <- beta0 + beta1*x
-MSE <- sum((y - yhat) ^ 2) / nrow(ads)
+MSE <- sum((y - yhat) ^ 2) / n
 cost_history <- double()
 theta_history <- list()
 count <- 1
@@ -29,7 +29,7 @@ while (delta >= 1e-11) {
   beta0 <- beta0_new
   beta1 <- beta1_new
   yhat <- beta0 + beta1*x
-  MSE_new <- sum((y - yhat) ^ 2) / nrow(ads)
+  MSE_new <- sum((y - yhat) ^ 2) / nrow(mtcars)
   delta <- abs(MSE - MSE_new)
   print(paste('delta = ', delta))
   print(paste('Beta0 = ', beta0))
